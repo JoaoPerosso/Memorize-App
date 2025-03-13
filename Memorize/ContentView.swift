@@ -11,9 +11,9 @@ struct ContentView: View {
     var body: some View {
         HStack {
             CardView(isFaceUp: true)
-            CardView()
-            CardView()
-            CardView()
+            CardView(isFaceUp: true)
+            CardView(isFaceUp: true)
+            CardView(isFaceUp: true)
         }
         
         .foregroundColor(.cyan)
@@ -23,19 +23,21 @@ struct ContentView: View {
 }
 
 struct CardView: View {
-    var isFaceUp: Bool = false
+    @State var isFaceUp = true
         
     var body: some View {
-        ZStack(content:  {
+        ZStack()  {
+            let base = RoundedRectangle(cornerRadius: 20)
             if isFaceUp {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.orange)
-                RoundedRectangle(cornerRadius: 20).strokeBorder(lineWidth: 2)
+                base.foregroundColor(.white)
+                base.strokeBorder(lineWidth: 2)
                 Text("👻").font(.largeTitle)
             }else {
-                RoundedRectangle(cornerRadius: 20)
-            }
-        })
+                base.fill()            }
+        }
+        .onTapGesture { //(count: 2) two taps
+            isFaceUp.toggle() //toggle is a function that invert the value of a boolean variable, but need the @state on declaration of var
+        }
     }
 }
 
